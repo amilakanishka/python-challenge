@@ -49,6 +49,7 @@ for line in reader:
     # Just before leaving the loop update last_profit_loss
     last_profit_loss = current_profit_loss
 
+file.close()
 average_profit  = round((last_profit_loss - first_profit_loss)/(total_months - 1),2)
 print("Financial Analysis")
 print("----------------------------")
