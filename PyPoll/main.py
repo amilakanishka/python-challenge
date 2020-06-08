@@ -25,7 +25,7 @@ def publish_results(voteDict):
     output_file = os.path.join("analysis", "output.csv")
     with open(output_file, "w", newline='\n') as datafile:
         writer = csv.writer(datafile, delimiter =" ", escapechar=' ', quoting=csv.QUOTE_NONE)
-        writer.writerow(["Election Results".strip()])
+        writer.writerow(["Election Results"])
         writer.writerow(["-------------------------"])
         writer.writerow([f"Total Votes: {total_votes}"])
         writer.writerow(["-------------------------"])
@@ -46,14 +46,15 @@ votes = {}
 file_path = os.path.join("Resources", "election_data.csv")
 with open(file_path, "r") as poll_file:
     csvreader = csv.reader(poll_file)
-    # skip the header of the csv
-    next(csvreader,None)
-    # loop though rows of the csv file
-    for line in csvreader:
-        if line[2] not in votes:
-            votes[line[2]] = 1
-        else:
-            votes[line[2]] += 1 
+    # store the header and move the reader to data in csv
+    header = next(csvreader,None)
+    if header[1] == 'County' and header[2] == 'Candidate':
+        # loop though rows of the csv file
+        for line in csvreader:
+            if line[2] not in votes:
+                votes[line[2]] = 1
+            else:
+                votes[line[2]] += 1 
 
 publish_results(votes)
 print_results(os.path.join("analysis", "output.csv"))

@@ -16,27 +16,28 @@ greatest_decrease = 0.0
 file_path = os.path.join("Resources", "budget_data.csv")
 with open(file_path, "r") as bank_file:
     csvreader = csv.reader(bank_file)
-    # skip the header of the csv
-    next(csvreader,None)
-    # loop though rows of the csv file
-    for line in csvreader:
-        current_profit_loss = float(line[1])
-        total += current_profit_loss
-        total_months +=1
-        change_profit = current_profit_loss - last_profit_loss
-        if(greatest_increase < change_profit):
-            greatest_increase = change_profit
-            greatest_increase_month = line[0]
+    # store the header and move the reader to data in csv
+    header = next(csvreader,None)
+    if header[0] == 'Date' and header[1] == 'Profit/Losses':
+        # loop though rows of the csv file
+        for line in csvreader:
+            current_profit_loss = float(line[1])
+            total += current_profit_loss
+            total_months +=1
+            change_profit = current_profit_loss - last_profit_loss
+            if(greatest_increase < change_profit):
+                greatest_increase = change_profit
+                greatest_increase_month = line[0]
 
-        if(greatest_decrease > change_profit):
-            greatest_decrease = change_profit
-            greatest_decrease_month = line[0]
+            if(greatest_decrease > change_profit):
+                greatest_decrease = change_profit
+                greatest_decrease_month = line[0]
 
-        if(total_months ==1):
-            first_profit_loss = current_profit_loss
+            if(total_months ==1):
+                first_profit_loss = current_profit_loss
 
-        # Just before leaving the loop update last_profit_loss
-        last_profit_loss = current_profit_loss
+            # Just before leaving the loop update last_profit_loss
+            last_profit_loss = current_profit_loss
 
 average_profit  = round((last_profit_loss - first_profit_loss)/(total_months - 1),2)
 
