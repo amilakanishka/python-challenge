@@ -39,10 +39,21 @@ with open(file_path, "r") as bank_file:
         last_profit_loss = current_profit_loss
 
 average_profit  = round((last_profit_loss - first_profit_loss)/(total_months - 1),2)
-print("Financial Analysis")
-print("----------------------------")
-print(f"Total Months : {total_months}")
-print("Total : $" + "{:.0f}".format(total))
-print(f"Average Change : {average_profit }")
-print(f"Greatest Increase in Profits: {greatest_increase_month} " + "($"+"{:.0f}".format(greatest_increase)+")")   
-print(f"Greatest Decrease in Profits: {greatest_decrease_month} " + "($"+"{:.0f}".format(greatest_decrease)+")")  
+
+results = ("Financial Analysis",
+            "----------------------------",
+            f"Total Months : {total_months}",
+            "Total : $" + "{:.0f}".format(total),
+            f"Average Change : {average_profit }",
+            f"Greatest Increase in Profits: {greatest_increase_month} " + "($"+"{:.0f}".format(greatest_increase)+")",
+            f"Greatest Decrease in Profits: {greatest_decrease_month} " + "($"+"{:.0f}".format(greatest_decrease)+")")
+
+#  print results
+for row in results:
+    print(row) 
+
+# publish the analysis to output.csv
+output_file = os.path.join("analysis", "output.csv")
+with open(output_file, "w", newline='\n') as datafile:
+    writer = csv.writer(datafile, delimiter =" ", escapechar=' ', quoting=csv.QUOTE_NONE)
+    writer.writerows(results)

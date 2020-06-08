@@ -1,6 +1,7 @@
 import csv
 import os
 
+#  This will write the reults to output.csv inside analysis folder
 def publish_results(voteDict):
     candidates = voteDict.keys()
     each_votes = voteDict.values()
@@ -33,6 +34,7 @@ def publish_results(voteDict):
         writer.writerow([f"Winner: {winner}"])
         writer.writerow(["-------------------------"])
 
+# This will print the content of results file in the file_path
 def print_results(file_path):
     with open(file_path, "r") as analysis_file:
         csvreader = csv.reader(analysis_file)
